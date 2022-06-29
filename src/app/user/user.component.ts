@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { userData } from '../models/user.models';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-user',
@@ -9,23 +10,22 @@ import { userData } from '../models/user.models';
 })
 export class UserComponent implements OnInit {
 
-username = new FormControl('');
-mail = new FormControl('');
-password = new FormControl('');
-address = new FormControl ('');
+userForm : FormGroup = this.fb.group({
+    credential: this.fb.group({                  // créer une instance de FormGroup (fb = formbuilder)
+          mail : ['toto@gmail.com'],             // créer une instance de FormControl
+          password : ['1234'],                   // créer une instance de FormControl
+  })
+});
 
-user: userData = new userData ("","","","");
 
-  constructor() { }
+constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-  }
-  submit(): void {
-this.user = { username : this.username.value,
-              mail : this.mail.value,
-              password : this.password.value,
-              address : this.address.value};
 
+  }
+
+  login() {
+    console.log('donnée du formulaire....', this.userForm.value); // methode a appliqué au submit
   }
 
 }
